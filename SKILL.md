@@ -9,11 +9,11 @@ Claude cannot watch video or open TikTok links, but it can read images and text.
 
 ## Steps
 
-1. Run the extractor (works for a URL or a local video path):
+1. Run the extractor (works for a URL or a local video path). `<skill-dir>` is the folder that holds this SKILL.md, wherever the skill is installed:
    ```
-   python ~/.claude/skills/tiktok-analyzer/scripts/extract.py "<url-or-file>" "<out_dir>"
+   python "<skill-dir>/scripts/extract.py" "<url-or-file>" "<out_dir>"
    ```
-   Use the scratchpad or a temp dir for `<out_dir>`, not the user's project. Optional args: max frames (default 24), Whisper model (default `base`; use `small` if the speech is noisy, accented or non-English). First run downloads the Whisper model, so allow a few minutes.
+   If the script fails on a missing package, install the dependencies once with `python -m pip install -r "<skill-dir>/requirements.txt"`. Use the scratchpad or a temp dir for `<out_dir>`, not the user's project. Optional args: max frames (default 24), Whisper model (default `base`; use `small` if the speech is noisy, accented or non-English). First run downloads the Whisper model, so allow a few minutes.
 2. Read `metadata.json` (caption, author, date, hashtags, counts, sound), then `transcript.txt`.
 3. Read the frames in `frames/` with the Read tool, in order. File names carry the timestamp (`t0012.3s.jpg`), so you can line each frame up with the transcript. Frames matter because much of TikTok's information is burned-in text, product shots, charts and demos that are never spoken.
 4. Answer the user's actual question. For fact extraction, separate what was **said** (transcript), **shown** (frames, including on-screen text), and **claimed in the caption**. Cite timestamps so the user can check the source.
@@ -33,4 +33,4 @@ Claude cannot watch video or open TikTok links, but it can read images and text.
 - **"Unexpected response from webpage request"**: TikTok's bot check needs browser impersonation. Run `python -m pip install -U "yt-dlp[curl-cffi]"` and retry. This was needed on the first real test.
 - **HTTP 403 or other extractor errors**: TikTok changes often. Run `python -m pip install -U yt-dlp` and retry once.
 - **No speech**: the transcript is empty, lean on frames and caption, and say so.
-- Missing packages: `python -m pip install "yt-dlp[curl-cffi]" imageio-ffmpeg faster-whisper` (ffmpeg is bundled through imageio-ffmpeg, no system install needed).
+- Missing packages: `python -m pip install -r "<skill-dir>/requirements.txt"` (ffmpeg is bundled through imageio-ffmpeg, no system install needed).
