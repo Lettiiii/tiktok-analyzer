@@ -11,7 +11,7 @@ Everything runs locally. No API keys.
 Clone the repo into your Claude Code skills folder under the same name:
 
 ```
-git clone https://github.com/<you>/tiktok-analyzer ~/.claude/skills/tiktok-analyzer
+git clone https://github.com/Lettiiii/tiktok-analyzer ~/.claude/skills/tiktok-analyzer
 python -m pip install -r ~/.claude/skills/tiktok-analyzer/requirements.txt
 ```
 
